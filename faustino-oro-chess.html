@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partidas de Faustino Oro - Ajedrez</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .filters {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filters label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .filters select {
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 1.5em;
+            padding: 50px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .game-result {
+            font-size: 1.8em;
+            font-weight: bold;
+            padding: 5px 15px;
+            border-radius: 8px;
+        }
+
+        .result-win {
+            background: #4caf50;
+            color: white;
+        }
+
+        .result-loss {
+            background: #f44336;
+            color: white;
+        }
+
+        .result-draw {
+            background: #ff9800;
+            color: white;
+        }
+
+        .game-date {
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .players {
+            margin-bottom: 15px;
+        }
+
+        .player {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 6px;
+        }
+
+        .player-white {
+            background: #f5f5f5;
+        }
+
+        .player-black {
+            background: #333;
+            color: white;
+        }
+
+        .player-name {
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .player-rating {
+            background: #667eea;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .game-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .info-item {
+            font-size: 0.9em;
+        }
+
+        .info-label {
+            color: #999;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .link-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .link-button:hover {
+            background: #5568d3;
+        }
+
+        .error {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            color: #f44336;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 Faustino Oro</h1>
+            <div class="subtitle">Maestro Internacional - Prodigio del Ajedrez Argentino</div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalGames">-</div>
+                    <div class="stat-label">Partidas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="wins">-</div>
+                    <div class="stat-label">Victorias</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="draws">-</div>
+                    <div class="stat-label">Empates</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="losses">-</div>
+                    <div class="stat-label">Derrotas</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters">
+            <label for="monthSelect">Filtrar por mes:</label>
+            <select id="monthSelect">
+                <option value="">Cargando...</option>
+            </select>
+            <label for="timeClassSelect">Tipo de juego:</label>
+            <select id="timeClassSelect">
+                <option value="all">Todos</option>
+                <option value="rapid">Rápidas</option>
+                <option value="blitz">Blitz</option>
+                <option value="bullet">Bullet</option>
+                <option value="daily">Diarias</option>
+            </select>
+        </div>
+
+        <div id="loading" class="loading">
+            Cargando partidas de Faustino Oro...
+        </div>
+
+        <div id="gamesContainer" class="games-grid"></div>
+        <div id="error"></div>
+    </div>
+
+    <script>
+        const username = 'FaustinoOro';
+        let allGames = [];
+
+        // Generar opciones de meses (últimos 12 meses)
+        function generateMonthOptions() {
+            const select = document.getElementById('monthSelect');
+            select.innerHTML = '';
+            
+            const now = new Date();
+            for (let i = 0; i < 12; i++) {
+                const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const monthName = date.toLocaleDateString('es', { month: 'long', year: 'numeric' });
+                
+                const option = document.createElement('option');
+                option.value = `${year}/${month}`;
+                option.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+                select.appendChild(option);
+            }
+        }
+
+        // Obtener partidas de un mes específico
+        async function fetchGamesForMonth(year, month) {
+            const url = `https://api.chess.com/pub/player/${username}/games/${year}/${month}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) return [];
+                const data = await response.json();
+                return data.games || [];
+            } catch (error) {
+                console.error(`Error fetching games for ${year}/${month}:`, error);
+                return [];
+            }
+        }
+
+        // Cargar partidas del mes seleccionado
+        async function loadGames() {
+            const monthSelect = document.getElementById('monthSelect');
+            const selectedMonth = monthSelect.value;
+            
+            if (!selectedMonth) return;
+            
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('gamesContainer').innerHTML = '';
+            document.getElementById('error').innerHTML = '';
+
+            const [year, month] = selectedMonth.split('/');
+            allGames = await fetchGamesForMonth(year, month);
+
+            document.getElementById('loading').style.display = 'none';
+
+            if (allGames.length === 0) {
+                document.getElementById('error').innerHTML = '<div class="error">No se encontraron partidas para este mes</div>';
+                updateStats([]);
+                return;
+            }
+
+            filterAndDisplayGames();
+        }
+
+        // Filtrar y mostrar partidas
+        function filterAndDisplayGames() {
+            const timeClass = document.getElementById('timeClassSelect').value;
+            
+            let filteredGames = allGames;
+            if (timeClass !== 'all') {
+                filteredGames = allGames.filter(game => game.time_class === timeClass);
+            }
+
+            updateStats(filteredGames);
+            displayGames(filteredGames);
+        }
+
+        // Actualizar estadísticas
+        function updateStats(games) {
+            let wins = 0, draws = 0, losses = 0;
+
+            games.forEach(game => {
+                const result = getGameResult(game);
+                if (result === 'Victoria') wins++;
+                else if (result === 'Empate') draws++;
+                else if (result === 'Derrota') losses++;
+            });
+
+            document.getElementById('totalGames').textContent = games.length;
+            document.getElementById('wins').textContent = wins;
+            document.getElementById('draws').textContent = draws;
+            document.getElementById('losses').textContent = losses;
+        }
+
+        // Determinar resultado del juego
+        function getGameResult(game) {
+            const white = game.white.username.toLowerCase();
+            const black = game.black.username.toLowerCase();
+            const isFaustinoWhite = white === username.toLowerCase();
+
+            if (game.white.result === 'win' && isFaustinoWhite) return 'Victoria';
+            if (game.black.result === 'win' && !isFaustinoWhite) return 'Victoria';
+            if (game.white.result === 'draw' || game.black.result === 'draw') return 'Empate';
+            return 'Derrota';
+        }
+
+        // Mostrar partidas
+        function displayGames(games) {
+            const container = document.getElementById('gamesContainer');
+            container.innerHTML = '';
+
+            games.slice().reverse().forEach(game => {
+                const card = createGameCard(game);
+                container.appendChild(card);
+            });
+        }
+
+        // Crear tarjeta de juego
+        function createGameCard(game) {
+            const card = document.createElement('div');
+            card.className = 'game-card';
+
+            const white = game.white;
+            const black = game.black;
+            const isFaustinoWhite = white.username.toLowerCase() === username.toLowerCase();
+            const result = getGameResult(game);
+            const resultClass = result === 'Victoria' ? 'result-win' : result === 'Empate' ? 'result-draw' : 'result-loss';
+
+            const date = new Date(game.end_time * 1000).toLocaleDateString('es', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            const timeControl = game.time_control || 'N/A';
+            const timeClass = game.time_class ? game.time_class.charAt(0).toUpperCase() + game.time_class.slice(1) : 'N/A';
+
+            card.innerHTML = `
+                <div class="game-header">
+                    <div class="game-result ${resultClass}">${result}</div>
+                    <div class="game-date">${date}</div>
+                </div>
+                
+                <div class="players">
+                    <div class="player player-white">
+                        <span class="player-name">⚪ ${white.username}${isFaustinoWhite ? ' 👤' : ''}</span>
+                        <span class="player-rating">${white.rating}</span>
+                    </div>
+                    <div class="player player-black">
+                        <span class="player-name">⚫ ${black.username}${!isFaustinoWhite ? ' 👤' : ''}</span>
+                        <span class="player-rating">${black.rating}</span>
+                    </div>
+                </div>
+
+                <div class="game-info">
+                    <div class="info-item">
+                        <span class="info-label">Tipo</span>
+                        <span class="info-value">${timeClass}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Control</span>
+                        <span class="info-value">${timeControl}</span>
+                    </div>
+                </div>
+
+                <a href="${game.url}" target="_blank" class="link-button">Ver partida en Chess.com →</a>
+            `;
+
+            return card;
+        }
+
+        // Inicializar
+        generateMonthOptions();
+        loadGames();
+
+        // Event listeners
+        document.getElementById('monthSelect').addEventListener('change', loadGames);
+        document.getElementById('timeClassSelect').addEventListener('change', filterAndDisplayGames);
+    </script>
+</body>
+</html>
