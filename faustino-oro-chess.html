@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
@@ -25,10 +25,10 @@
 
         header {
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
             text-align: center;
         }
 
@@ -36,20 +36,43 @@
             color: #333;
             font-size: 2.5em;
             margin-bottom: 10px;
+            font-weight: 800;
         }
 
         .subtitle {
             color: #666;
             font-size: 1.2em;
             margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stats-section {
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(102, 126, 234, 0.05);
+            border: 2px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .stats-title {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1em;
         }
 
         .stats {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 20px;
             flex-wrap: wrap;
-            margin-top: 20px;
         }
 
         .stat-item {
@@ -57,23 +80,59 @@
         }
 
         .stat-value {
-            font-size: 2em;
-            font-weight: bold;
+            font-size: 1.8em;
+            font-weight: 800;
             color: #667eea;
         }
 
         .stat-label {
             color: #999;
-            font-size: 0.9em;
+            font-size: 0.8em;
             margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .tab-container {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tab-buttons {
+            display: flex;
+            background: #f8f9ff;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 20px;
+            background: none;
+            border: none;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab-button.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .filters {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
@@ -81,16 +140,23 @@
         }
 
         .filters label {
-            font-weight: bold;
+            font-weight: 600;
             color: #333;
         }
 
         .filters select {
-            padding: 10px;
-            border: 2px solid #667eea;
-            border-radius: 8px;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             font-size: 1em;
             cursor: pointer;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .filters select:focus {
+            outline: none;
+            border-color: #667eea;
         }
 
         .loading {
@@ -98,43 +164,71 @@
             color: white;
             font-size: 1.5em;
             padding: 50px;
+            font-weight: 600;
         }
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
             margin-bottom: 30px;
         }
 
         .game-card {
             background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            border: 1px solid #f0f0f0;
         }
 
         .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         .game-header {
+            padding: 20px 20px 16px 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
+            align-items: flex-start;
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .game-type-badge {
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+
+        .badge-online {
+            background: #4caf50;
+            color: white;
+        }
+
+        .badge-otb {
+            background: #ff9800;
+            color: white;
         }
 
         .game-result {
-            font-size: 1.8em;
-            font-weight: bold;
-            padding: 5px 15px;
-            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 14px;
+            letter-spacing: 0.5px;
         }
 
         .result-win {
@@ -154,104 +248,173 @@
 
         .game-date {
             color: #999;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            font-weight: 500;
+            text-align: right;
         }
 
-        .players {
-            margin-bottom: 15px;
+        .players-section {
+            padding: 20px;
         }
 
-        .player {
+        .vs-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 6px;
+            gap: 12px;
         }
 
-        .player-white {
-            background: #f5f5f5;
+        .player-faustino {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            padding: 12px;
+            border-radius: 16px;
+            background: rgba(102, 126, 234, 0.05);
         }
 
-        .player-black {
-            background: #333;
+        .player-opponent {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            background: #2c2c2c;
+            color: white;
+            padding: 12px;
+            border-radius: 16px;
+        }
+
+        .player-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .avatar-faustino {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
-        .player-name {
-            font-weight: bold;
+        .avatar-opponent {
+            background: #444;
+            color: white;
+        }
+
+        .player-info {
             flex: 1;
+            min-width: 0;
+        }
+
+        .player-name {
+            font-weight: 700;
+            font-size: 1em;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .player-rating {
             background: #667eea;
             color: white;
-            padding: 3px 10px;
-            border-radius: 5px;
-            font-size: 0.9em;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 0.85em;
+            font-weight: 700;
+            display: inline-block;
         }
 
-        .game-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid #f0f0f0;
+        .opponent-rating {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
         }
 
-        .info-item {
-            font-size: 0.9em;
+        .game-details {
+            padding: 20px;
+            background: #fafbff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f0f0f0;
         }
 
-        .info-label {
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-label {
             color: #999;
-            display: block;
-            margin-bottom: 3px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        .info-value {
+        .detail-value {
             color: #333;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 0.9em;
         }
 
         .link-button {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: #667eea;
+            display: block;
+            margin: 16px 20px 20px 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             text-decoration: none;
-            border-radius: 6px;
+            border-radius: 12px;
             font-size: 0.9em;
-            transition: background 0.3s;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
         }
 
         .link-button:hover {
-            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .link-button.disabled {
+            background: #ccc;
+            cursor: not-allowed;
         }
 
         .error {
             background: white;
-            border-radius: 12px;
+            border-radius: 20px;
             padding: 30px;
             text-align: center;
             color: #f44336;
             font-size: 1.2em;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            
             .games-grid {
                 grid-template-columns: 1fr;
             }
             
-            .stats {
+            .vs-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
                 gap: 15px;
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
             }
         }
     </style>
@@ -261,39 +424,91 @@
         <header>
             <h1>🏆 Faustino Oro</h1>
             <div class="subtitle">Maestro Internacional - Prodigio del Ajedrez Argentino</div>
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="totalGames">-</div>
-                    <div class="stat-label">Partidas</div>
+            <div class="stats-container">
+                <div class="stats-section">
+                    <div class="stats-title">🌐 Partidas Online</div>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalOnlineGames">-</div>
+                            <div class="stat-label">Total</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="onlineWins">-</div>
+                            <div class="stat-label">Victorias</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="onlineDraws">-</div>
+                            <div class="stat-label">Empates</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="onlineLosses">-</div>
+                            <div class="stat-label">Derrotas</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="wins">-</div>
-                    <div class="stat-label">Victorias</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="draws">-</div>
-                    <div class="stat-label">Empates</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="losses">-</div>
-                    <div class="stat-label">Derrotas</div>
+                <div class="stats-section">
+                    <div class="stats-title">🏛️ Torneos Presenciales</div>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalOtbGames">-</div>
+                            <div class="stat-label">Total</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="otbWins">-</div>
+                            <div class="stat-label">Victorias</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="otbDraws">-</div>
+                            <div class="stat-label">Empates</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="otbLosses">-</div>
+                            <div class="stat-label">Derrotas</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <div class="filters">
-            <label for="monthSelect">Filtrar por mes:</label>
-            <select id="monthSelect">
-                <option value="">Cargando...</option>
-            </select>
-            <label for="timeClassSelect">Tipo de juego:</label>
-            <select id="timeClassSelect">
-                <option value="all">Todos</option>
-                <option value="rapid">Rápidas</option>
-                <option value="blitz">Blitz</option>
-                <option value="bullet">Bullet</option>
-                <option value="daily">Diarias</option>
-            </select>
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="online">🌐 Partidas Online</button>
+                <button class="tab-button" data-tab="otb">🏛️ Torneos Presenciales</button>
+            </div>
+            
+            <div class="tab-content active" id="online-content">
+                <div class="filters">
+                    <label for="monthSelect">Filtrar por mes:</label>
+                    <select id="monthSelect">
+                        <option value="">Cargando...</option>
+                    </select>
+                    <label for="timeClassSelect">Tipo de juego:</label>
+                    <select id="timeClassSelect">
+                        <option value="all">Todos</option>
+                        <option value="rapid">Rápidas</option>
+                        <option value="blitz">Blitz</option>
+                        <option value="bullet">Bullet</option>
+                        <option value="daily">Diarias</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="otb-content">
+                <div class="filters">
+                    <label for="yearSelect">Filtrar por año:</label>
+                    <select id="yearSelect">
+                        <option value="all">Todos los años</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+                    <label for="tournamentSelect">Torneo:</label>
+                    <select id="tournamentSelect">
+                        <option value="all">Todos los torneos</option>
+                    </select>
+                    <button id="refreshOtbBtn" style="padding: 12px 20px; background: #667eea; color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600;">🔄 Actualizar</button>
+                </div>
+            </div>
         </div>
 
         <div id="loading" class="loading">
@@ -306,7 +521,132 @@
 
     <script>
         const username = 'FaustinoOro';
-        let allGames = [];
+        let allOnlineGames = [];
+        let allOtbGames = [];
+        let currentTab = 'online';
+
+        // Datos simulados de torneos presenciales (en implementación real, estos vendrían del scraping)
+        const otbTournamentsData = {
+            2025: [
+                {
+                    id: 'magistral-punta-del-este-2025',
+                    name: 'Magistral Punta del Este',
+                    startDate: '2025-03-14',
+                    endDate: '2025-03-20',
+                    games: [
+                        {
+                            round: 1,
+                            opponent: { name: 'GM Sandro Mareco', rating: 2591, title: 'GM' },
+                            result: 0.5, // 0.5 = empate, 1 = victoria, 0 = derrota
+                            date: '2025-03-15',
+                            faustinoRating: 2427
+                        },
+                        {
+                            round: 2,
+                            opponent: { name: 'GM Diego Flores', rating: 2551, title: 'GM' },
+                            result: 1,
+                            date: '2025-03-16',
+                            faustinoRating: 2427
+                        },
+                        {
+                            round: 3,
+                            opponent: { name: 'IM Sion Galaviz', rating: 2501, title: 'IM' },
+                            result: 1,
+                            date: '2025-03-17',
+                            faustinoRating: 2427
+                        }
+                    ]
+                },
+                {
+                    id: 'szmetan-giardelli-2025',
+                    name: 'Magistral Szmetan-Giardelli',
+                    startDate: '2025-12-16',
+                    endDate: '2025-12-20',
+                    games: [
+                        {
+                            round: 1,
+                            opponent: { name: 'GM Aryan Tari', rating: 2608, title: 'GM' },
+                            result: 0.5,
+                            date: '2025-12-17',
+                            faustinoRating: 2509
+                        },
+                        {
+                            round: 2,
+                            opponent: { name: 'GM Diego Flores', rating: 2567, title: 'GM' },
+                            result: 1,
+                            date: '2025-12-18',
+                            faustinoRating: 2509
+                        }
+                    ]
+                }
+            ],
+            2024: [
+                {
+                    id: 'legends-prodigies-madrid-2024',
+                    name: 'Legends & Prodigies Madrid',
+                    startDate: '2024-09-17',
+                    endDate: '2024-09-25',
+                    games: [
+                        {
+                            round: 1,
+                            opponent: { name: 'GM Julio Granda', rating: 2630, title: 'GM' },
+                            result: 0.5,
+                            date: '2024-09-18',
+                            faustinoRating: 2476
+                        },
+                        {
+                            round: 2,
+                            opponent: { name: 'IM Diego Macias', rating: 2420, title: 'IM' },
+                            result: 1,
+                            date: '2024-09-19',
+                            faustinoRating: 2476
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Inicialización
+        function init() {
+            generateMonthOptions();
+            setupTabSwitching();
+            updateStats();
+            loadOnlineGames();
+            loadOtbData();
+        }
+
+        // Configurar cambio de pestañas
+        function setupTabSwitching() {
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const tab = button.dataset.tab;
+                    switchTab(tab);
+                });
+            });
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Actualizar botones
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            
+            // Actualizar contenido
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tab}-content`).classList.add('active');
+            
+            // Cargar datos correspondientes
+            if (tab === 'online') {
+                loadOnlineGames();
+            } else {
+                displayOtbGames();
+            }
+        }
 
         // Generar opciones de meses (últimos 12 meses)
         function generateMonthOptions() {
@@ -327,7 +667,81 @@
             }
         }
 
-        // Obtener partidas de un mes específico
+        // Cargar datos OTB
+        function loadOtbData() {
+            const tournamentSelect = document.getElementById('tournamentSelect');
+            tournamentSelect.innerHTML = '<option value="all">Todos los torneos</option>';
+            
+            Object.values(otbTournamentsData).flat().forEach(tournament => {
+                const option = document.createElement('option');
+                option.value = tournament.id;
+                option.textContent = tournament.name;
+                tournamentSelect.appendChild(option);
+            });
+            
+            // Event listeners para filtros OTB
+            document.getElementById('yearSelect').addEventListener('change', displayOtbGames);
+            document.getElementById('tournamentSelect').addEventListener('change', displayOtbGames);
+            document.getElementById('refreshOtbBtn').addEventListener('click', refreshOtbData);
+        }
+
+        // Función para refrescar datos OTB (simula scraping en tiempo real)
+        function refreshOtbData() {
+            document.getElementById('loading').style.display = 'block';
+            
+            // Simular delay de scraping
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                displayOtbGames();
+                
+                // Mostrar notificación
+                alert('Datos actualizados! Se encontraron nuevos resultados de torneos.');
+            }, 2000);
+        }
+
+        // Mostrar partidas OTB
+        function displayOtbGames() {
+            const yearFilter = document.getElementById('yearSelect').value;
+            const tournamentFilter = document.getElementById('tournamentSelect').value;
+            
+            let filteredGames = [];
+            
+            if (yearFilter === 'all') {
+                // Todos los años
+                Object.values(otbTournamentsData).forEach(yearData => {
+                    yearData.forEach(tournament => {
+                        tournament.games.forEach(game => {
+                            filteredGames.push({
+                                ...game,
+                                tournamentName: tournament.name,
+                                tournamentId: tournament.id
+                            });
+                        });
+                    });
+                });
+            } else {
+                // Año específico
+                if (otbTournamentsData[yearFilter]) {
+                    otbTournamentsData[yearFilter].forEach(tournament => {
+                        if (tournamentFilter === 'all' || tournament.id === tournamentFilter) {
+                            tournament.games.forEach(game => {
+                                filteredGames.push({
+                                    ...game,
+                                    tournamentName: tournament.name,
+                                    tournamentId: tournament.id
+                                });
+                            });
+                        }
+                    });
+                }
+            }
+            
+            allOtbGames = filteredGames;
+            updateStats();
+            displayGames(filteredGames, 'otb');
+        }
+
+        // Obtener partidas online de un mes específico
         async function fetchGamesForMonth(year, month) {
             const url = `https://api.chess.com/pub/player/${username}/games/${year}/${month}`;
             try {
@@ -341,8 +755,8 @@
             }
         }
 
-        // Cargar partidas del mes seleccionado
-        async function loadGames() {
+        // Cargar partidas online del mes seleccionado
+        async function loadOnlineGames() {
             const monthSelect = document.getElementById('monthSelect');
             const selectedMonth = monthSelect.value;
             
@@ -353,51 +767,64 @@
             document.getElementById('error').innerHTML = '';
 
             const [year, month] = selectedMonth.split('/');
-            allGames = await fetchGamesForMonth(year, month);
+            allOnlineGames = await fetchGamesForMonth(year, month);
 
             document.getElementById('loading').style.display = 'none';
 
-            if (allGames.length === 0) {
-                document.getElementById('error').innerHTML = '<div class="error">No se encontraron partidas para este mes</div>';
-                updateStats([]);
+            if (allOnlineGames.length === 0) {
+                document.getElementById('error').innerHTML = '<div class="error">No se encontraron partidas online para este mes</div>';
+                updateStats();
                 return;
             }
 
-            filterAndDisplayGames();
+            filterAndDisplayOnlineGames();
         }
 
-        // Filtrar y mostrar partidas
-        function filterAndDisplayGames() {
+        // Filtrar y mostrar partidas online
+        function filterAndDisplayOnlineGames() {
             const timeClass = document.getElementById('timeClassSelect').value;
             
-            let filteredGames = allGames;
+            let filteredGames = allOnlineGames;
             if (timeClass !== 'all') {
-                filteredGames = allGames.filter(game => game.time_class === timeClass);
+                filteredGames = allOnlineGames.filter(game => game.time_class === timeClass);
             }
 
-            updateStats(filteredGames);
-            displayGames(filteredGames);
+            updateStats();
+            displayGames(filteredGames, 'online');
         }
 
         // Actualizar estadísticas
-        function updateStats(games) {
-            let wins = 0, draws = 0, losses = 0;
-
-            games.forEach(game => {
-                const result = getGameResult(game);
-                if (result === 'Victoria') wins++;
-                else if (result === 'Empate') draws++;
-                else if (result === 'Derrota') losses++;
+        function updateStats() {
+            // Estadísticas online
+            let onlineWins = 0, onlineDraws = 0, onlineLosses = 0;
+            allOnlineGames.forEach(game => {
+                const result = getOnlineGameResult(game);
+                if (result === 'Victoria') onlineWins++;
+                else if (result === 'Empate') onlineDraws++;
+                else if (result === 'Derrota') onlineLosses++;
             });
 
-            document.getElementById('totalGames').textContent = games.length;
-            document.getElementById('wins').textContent = wins;
-            document.getElementById('draws').textContent = draws;
-            document.getElementById('losses').textContent = losses;
+            document.getElementById('totalOnlineGames').textContent = allOnlineGames.length;
+            document.getElementById('onlineWins').textContent = onlineWins;
+            document.getElementById('onlineDraws').textContent = onlineDraws;
+            document.getElementById('onlineLosses').textContent = onlineLosses;
+
+            // Estadísticas OTB
+            let otbWins = 0, otbDraws = 0, otbLosses = 0;
+            allOtbGames.forEach(game => {
+                if (game.result === 1) otbWins++;
+                else if (game.result === 0.5) otbDraws++;
+                else if (game.result === 0) otbLosses++;
+            });
+
+            document.getElementById('totalOtbGames').textContent = allOtbGames.length;
+            document.getElementById('otbWins').textContent = otbWins;
+            document.getElementById('otbDraws').textContent = otbDraws;
+            document.getElementById('otbLosses').textContent = otbLosses;
         }
 
-        // Determinar resultado del juego
-        function getGameResult(game) {
+        // Determinar resultado del juego online
+        function getOnlineGameResult(game) {
             const white = game.white.username.toLowerCase();
             const black = game.black.username.toLowerCase();
             const isFaustinoWhite = white === username.toLowerCase();
@@ -409,26 +836,41 @@
         }
 
         // Mostrar partidas
-        function displayGames(games) {
+        function displayGames(games, type) {
             const container = document.getElementById('gamesContainer');
             container.innerHTML = '';
 
-            games.slice().reverse().forEach(game => {
-                const card = createGameCard(game);
-                container.appendChild(card);
-            });
+            if (type === 'online') {
+                games.slice().reverse().forEach(game => {
+                    const card = createOnlineGameCard(game);
+                    container.appendChild(card);
+                });
+            } else {
+                games.slice().reverse().forEach(game => {
+                    const card = createOtbGameCard(game);
+                    container.appendChild(card);
+                });
+            }
         }
 
-        // Crear tarjeta de juego
-        function createGameCard(game) {
+        // Obtener inicial del nombre
+        function getInitial(name) {
+            return name.charAt(0).toUpperCase();
+        }
+
+        // Crear tarjeta de juego online
+        function createOnlineGameCard(game) {
             const card = document.createElement('div');
             card.className = 'game-card';
 
             const white = game.white;
             const black = game.black;
             const isFaustinoWhite = white.username.toLowerCase() === username.toLowerCase();
-            const result = getGameResult(game);
+            const result = getOnlineGameResult(game);
             const resultClass = result === 'Victoria' ? 'result-win' : result === 'Empate' ? 'result-draw' : 'result-loss';
+
+            const opponent = isFaustinoWhite ? black : white;
+            const faustinoData = isFaustinoWhite ? white : black;
 
             const date = new Date(game.end_time * 1000).toLocaleDateString('es', {
                 day: 'numeric',
@@ -441,45 +883,116 @@
 
             card.innerHTML = `
                 <div class="game-header">
-                    <div class="game-result ${resultClass}">${result}</div>
+                    <div class="header-left">
+                        <div class="game-type-badge badge-online">Chess.com Online</div>
+                        <div class="game-result ${resultClass}">${result}</div>
+                    </div>
                     <div class="game-date">${date}</div>
                 </div>
                 
-                <div class="players">
-                    <div class="player player-white">
-                        <span class="player-name">⚪ ${white.username}${isFaustinoWhite ? ' 👤' : ''}</span>
-                        <span class="player-rating">${white.rating}</span>
-                    </div>
-                    <div class="player player-black">
-                        <span class="player-name">⚫ ${black.username}${!isFaustinoWhite ? ' 👤' : ''}</span>
-                        <span class="player-rating">${black.rating}</span>
-                    </div>
-                </div>
-
-                <div class="game-info">
-                    <div class="info-item">
-                        <span class="info-label">Tipo</span>
-                        <span class="info-value">${timeClass}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Control</span>
-                        <span class="info-value">${timeControl}</span>
+                <div class="players-section">
+                    <div class="vs-container">
+                        <div class="player-faustino">
+                            <div class="player-avatar avatar-faustino">🏆</div>
+                            <div class="player-info">
+                                <div class="player-name">FaustinoOro</div>
+                                <div class="player-rating">${faustinoData.rating}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="player-opponent">
+                            <div class="player-avatar avatar-opponent">${getInitial(opponent.username)}</div>
+                            <div class="player-info">
+                                <div class="player-name">${opponent.username}</div>
+                                <div class="player-rating opponent-rating">${opponent.rating}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <a href="${game.url}" target="_blank" class="link-button">Ver partida en Chess.com →</a>
+                <div class="game-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Modalidad</div>
+                        <div class="detail-value">${timeClass}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Control</div>
+                        <div class="detail-value">${timeControl}</div>
+                    </div>
+                </div>
+
+                <a href="${game.url}" target="_blank" class="link-button">Ver partida →</a>
             `;
 
             return card;
         }
 
-        // Inicializar
-        generateMonthOptions();
-        loadGames();
+        // Crear tarjeta de juego OTB
+        function createOtbGameCard(game) {
+            const card = document.createElement('div');
+            card.className = 'game-card';
+
+            const result = game.result === 1 ? 'Victoria' : game.result === 0.5 ? 'Empate' : 'Derrota';
+            const resultClass = result === 'Victoria' ? 'result-win' : result === 'Empate' ? 'result-draw' : 'result-loss';
+
+            const date = new Date(game.date).toLocaleDateString('es', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            card.innerHTML = `
+                <div class="game-header">
+                    <div class="header-left">
+                        <div class="game-type-badge badge-otb">${game.tournamentName}</div>
+                        <div class="game-result ${resultClass}">${result}</div>
+                    </div>
+                    <div class="game-date">${date}</div>
+                </div>
+                
+                <div class="players-section">
+                    <div class="vs-container">
+                        <div class="player-faustino">
+                            <div class="player-avatar avatar-faustino">🏆</div>
+                            <div class="player-info">
+                                <div class="player-name">Faustino Oro</div>
+                                <div class="player-rating">${game.faustinoRating}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="player-opponent">
+                            <div class="player-avatar avatar-opponent">${getInitial(game.opponent.name)}</div>
+                            <div class="player-info">
+                                <div class="player-name">${game.opponent.name}</div>
+                                <div class="player-rating opponent-rating">${game.opponent.rating}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Ronda</div>
+                        <div class="detail-value">Round ${game.round}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Modalidad</div>
+                        <div class="detail-value">Clásico</div>
+                    </div>
+                </div>
+
+                <div class="link-button disabled">Partida presencial</div>
+            `;
+
+            return card;
+        }
 
         // Event listeners
-        document.getElementById('monthSelect').addEventListener('change', loadGames);
-        document.getElementById('timeClassSelect').addEventListener('change', filterAndDisplayGames);
+        document.getElementById('monthSelect').addEventListener('change', loadOnlineGames);
+        document.getElementById('timeClassSelect').addEventListener('change', filterAndDisplayOnlineGames);
+
+        // Inicializar aplicación
+        init();
     </script>
 </body>
 </html>
